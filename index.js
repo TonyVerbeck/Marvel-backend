@@ -21,10 +21,6 @@ app.use(comicIdRoutes);
 const userRoutes = require("./routes/user");
 app.use(userRoutes);
 
-app.get("/", (req, res) => {
-  res.json(201).json({ message: "Welcome to My Marvel Homepage" });
-});
-
 app.all("*", (req, res) => {
   res.status(404).json({ message: "Thanos is coming for you" });
 });
