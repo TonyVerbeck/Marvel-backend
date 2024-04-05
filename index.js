@@ -1,11 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-const axios = require("axios");
+
 require("dotenv").config();
 
 const app = express();
 app.use(cors());
-app.use(express.json());
 
 const charactersRoutes = require("./routes/characters");
 app.use(charactersRoutes);
@@ -18,6 +17,13 @@ app.use(comicsRoutes);
 
 const comicIdRoutes = require("./routes/comicId");
 app.use(comicIdRoutes);
+
+const userRoutes = require("./routes/user");
+app.use(userRoutes);
+
+app.get("/", (req, res) => {
+  res.json(201).json({ message: "Welcome to My Marvel Homepage" });
+});
 
 app.all("*", (req, res) => {
   res.status(404).json({ message: "Thanos is coming for you" });
