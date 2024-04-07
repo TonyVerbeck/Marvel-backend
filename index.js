@@ -1,10 +1,13 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 
 require("dotenv").config();
 
 const app = express();
 app.use(cors());
+app.use(express.json());
+mongoose.connect(process.env.MONGODB_URI);
 
 const charactersRoutes = require("./routes/characters");
 app.use(charactersRoutes);
@@ -25,6 +28,6 @@ app.all("*", (req, res) => {
   res.status(404).json({ message: "Thanos is coming for you" });
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log("Let's kill Thanos 🥊");
 });

@@ -3,7 +3,6 @@ const router = express.Router();
 const uid2 = require("uid2");
 const encBase64 = require("crypto-js/enc-base64");
 const SHA256 = require("crypto-js/sha256");
-const isAuthenticated = require("../middlewares/isAuthenticated");
 
 const User = require("../models/User");
 
@@ -23,9 +22,7 @@ router.post("/user/signup", async (req, res) => {
 
     const newUser = new User({
       email: req.body.email,
-      account: {
-        username: req.body.username,
-      },
+      username: req.body.username,
       token,
       hash,
       salt,
@@ -52,15 +49,13 @@ router.post("/user/login", async (req, res) => {
       res.status(200).json({
         _id: login._id,
         token: login.token,
-        account: {
-          username: login.account.username,
-        },
+        email: login.email,
       });
     } else {
       return res.status(401).json({ message: "Email or password incorrect" });
     }
 
-    await login.save();
+    // await login.save();
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
